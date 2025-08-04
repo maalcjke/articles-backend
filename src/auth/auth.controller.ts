@@ -10,8 +10,8 @@ import { AuthService } from './services/auth.service';
 import { JwtLocalService } from './services/jwt-local.service';
 import { GetCurrentUser } from './decorators/get-current-user.decorator';
 import { Tokens } from './auth.types';
-import { JwtUpdateStrategy } from './strategies/jwt.update.strategy';
 import { RefreshTokenGuard } from './guards/refresh-token.guard';
+import { RequireAuth } from './decorators/require-auth.decorator';
 
 @Controller('auth')
 export class AuthController {
@@ -40,12 +40,12 @@ export class AuthController {
     @GetCurrentUser('refreshToken') refreshToken: string,
   ): Promise<Tokens> {
     if (!userId || !refreshToken) throw new UnauthorizedException();
-
     return this.jwtService.refreshTokens(userId, refreshToken);
   }
 
   @Post('logout')
-  async logout(userId: number): Promise<boolean> {
+  @RequireAuth()
+  async logout(@GetCurrentUser('id') userId: number): Promise<boolean> {
     return this.authService.logout(userId);
   }
 }

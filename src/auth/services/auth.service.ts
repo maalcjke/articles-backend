@@ -26,7 +26,7 @@ export class AuthService {
       .catch((err) => {
         if (
           err instanceof QueryFailedError &&
-          //https://www.postgresql.org/docs/current/errcodes-appendix.html
+          // Driver error codes: https://www.postgresql.org/docs/current/errcodes-appendix.html
           Number((err as PGError).driverError['code']) === 23505
         ) {
           throw new BadRequestException('User already exists');
