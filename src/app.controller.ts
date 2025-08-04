@@ -1,12 +1,12 @@
 import { Controller, Get } from '@nestjs/common';
-import { AppService } from './app.service';
+import { GetCurrentUser } from './auth/decorators/get-current-user.decorator';
+import { RequireAuth } from './auth/decorators/require-auth.decorator';
 
 @Controller()
 export class AppController {
-  constructor(private readonly appService: AppService) {}
-
   @Get()
-  getHello(): string {
-    return this.appService.getHello();
+  @RequireAuth()
+  getHello(@GetCurrentUser() user: string): string {
+    return user;
   }
 }
