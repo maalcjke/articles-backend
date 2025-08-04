@@ -7,6 +7,8 @@ import JwtConfig from './config/jwt.config';
 import { APP_GUARD } from '@nestjs/core';
 import { AccessTokenGuard } from './auth/guards/access-token.guard';
 import { ArticlesModule } from './articles/articles.module';
+import { RedisModule } from '@lib/redis';
+import redisConfig from './config/redis.config';
 
 @Module({
   imports: [
@@ -15,6 +17,7 @@ import { ArticlesModule } from './articles/articles.module';
       load: [JwtConfig], // global access
     }),
     TypeOrmModule.forRootAsync(databaseConfig.asProvider()),
+    RedisModule.forRootAsync(redisConfig.asProvider()),
     AuthModule,
     ArticlesModule,
   ],

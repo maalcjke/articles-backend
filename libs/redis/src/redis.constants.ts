@@ -1,0 +1,2 @@
+export const REDIS_OPTIONS = 'REDIS_OPTIONS';
+export const REDIS_PROVIDER = 'REDIS_PROVIDER';
