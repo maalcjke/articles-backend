@@ -1,5 +1,4 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthModule } from './auth/auth.module';
@@ -17,8 +16,6 @@ import { AccessTokenGuard } from './auth/guards/access-token.guard';
     TypeOrmModule.forRootAsync(databaseConfig.asProvider()),
     AuthModule,
   ],
-
-  controllers: [AppController],
   providers: [
     {
       provide: APP_GUARD,
