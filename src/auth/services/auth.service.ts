@@ -2,20 +2,20 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { IsNull, Not, QueryFailedError, Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
-import { AuthUserEntity } from '../entities/auth-user.entity';
 import { JwtLocalService } from './jwt-local.service';
 import { Tokens } from '../auth.types';
 import { PGError } from '../../common/pg.interface';
+import { UserEntity } from '../../common/user.entity';
 
 @Injectable()
 export class AuthService {
   constructor(
-    @InjectRepository(AuthUserEntity)
-    private readonly userRepository: Repository<AuthUserEntity>,
+    @InjectRepository(UserEntity)
+    private readonly userRepository: Repository<UserEntity>,
     private readonly jwtLocalService: JwtLocalService,
   ) {}
 
-  async register(user: Omit<AuthUserEntity, 'id' | 'refreshToken'>) {
+  async register(user: Pick<UserEntity, 'password' | 'username' | 'email'>) {
     const hash = await bcrypt.hash(user.password, 10);
     const record = await this.userRepository
       .save({
@@ -38,7 +38,7 @@ export class AuthService {
     return this.getTokens(record.id, user.email);
   }
 
-  async login(user: Omit<AuthUserEntity, 'id' | 'username' | 'refreshToken'>) {
+  async login(user: Pick<UserEntity, 'email' | 'password'>) {
     const { email, password } = user;
     const record = await this.userRepository.findOne({ where: { email } });
 

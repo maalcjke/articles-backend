@@ -1,16 +1,16 @@
 import { JWTCreatePayload, Tokens } from '../auth.types';
 import { InjectRepository } from '@nestjs/typeorm';
-import { AuthUserEntity } from '../entities/auth-user.entity';
 import { JwtService } from '@nestjs/jwt';
 import { Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 import { ConfigService } from '@nestjs/config';
 import { ForbiddenException } from '@nestjs/common';
+import { UserEntity } from '../../common/user.entity';
 
 export class JwtLocalService {
   constructor(
-    @InjectRepository(AuthUserEntity)
-    private readonly userRepository: Repository<AuthUserEntity>,
+    @InjectRepository(UserEntity)
+    private readonly userRepository: Repository<UserEntity>,
     private readonly JwtService: JwtService,
     private readonly configService: ConfigService,
   ) {}
