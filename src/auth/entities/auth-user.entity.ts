@@ -1,4 +1,4 @@
-import { Column, Entity, PrimaryColumn, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity('users')
 export class AuthUserEntity {
@@ -13,4 +13,7 @@ export class AuthUserEntity {
 
   @Column()
   password: string;
+
+  @Column({ nullable: true })
+  refreshToken: string;
 }
