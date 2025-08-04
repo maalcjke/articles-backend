@@ -11,5 +11,7 @@ export default registerAs(
     username: process.env.PG_USER,
     password: process.env.PG_PASS,
     database: process.env.PG_NAME,
+    autoLoadEntities: true,
+    synchronize: true,
   }),
 );
