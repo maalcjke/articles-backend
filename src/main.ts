@@ -19,6 +19,7 @@ async function bootstrap() {
   const config = new DocumentBuilder()
     .setTitle('Articles backend')
     .setVersion('1.0')
+    .setExternalDoc('Postman Collection', '/docs-json')
     .build();
   const documentFactory = () => SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('docs', app, documentFactory);

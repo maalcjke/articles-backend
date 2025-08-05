@@ -12,7 +12,12 @@ import { GetCurrentUser } from './decorators/get-current-user.decorator';
 import { Tokens } from './auth.types';
 import { RefreshTokenGuard } from './guards/refresh-token.guard';
 import { RequireAuth } from './decorators/require-auth.decorator';
-import { ApiBody, ApiOperation, ApiResponse } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiBody,
+  ApiOperation,
+  ApiResponse,
+} from '@nestjs/swagger';
 import { UnauthorizedErrorDto } from '../common/dto/unauth-error.dto';
 import { ApiWrappedResponse } from '../common/decorators/wrapped-response.decorator';
 import { CrudArticleDto } from '../articles/dto/response/crud-article.dto';
@@ -64,6 +69,7 @@ export class AuthController {
   }
 
   @Post('refresh')
+  @ApiBearerAuth()
   @ApiOperation({ summary: 'Refresh access and refresh tokens' })
   @ApiWrappedResponse({
     model: AccessTokensDto,
@@ -86,6 +92,7 @@ export class AuthController {
 
   @RequireAuth()
   @Post('logout')
+  @ApiBearerAuth()
   @ApiOperation({ summary: 'Logout user and invalidate tokens' })
   @ApiResponse({ status: 200, description: 'Successfully logged out' })
   @ApiResponse({
