@@ -2,6 +2,7 @@ import Redis from 'ioredis';
 import { DynamicModule, Global, Module } from '@nestjs/common';
 import { RedisModuleOptions } from '@lib/redis/interfaces/redis-module.options';
 import { REDIS_OPTIONS, REDIS_PROVIDER } from '@lib/redis/redis.constants';
+import { RedisHelperService } from '@lib/redis/redis-helper.service';
 
 @Global()
 @Module({})
@@ -29,8 +30,9 @@ export class RedisModule {
           },
           inject: [REDIS_OPTIONS],
         },
+        RedisHelperService,
       ],
-      exports: [REDIS_PROVIDER],
+      exports: [REDIS_PROVIDER, RedisHelperService],
     };
   }
 }
