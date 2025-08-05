@@ -63,6 +63,8 @@ export class ArticlesService {
         .take(limit)
         .getManyAndCount();
 
+      if (items.length === 0) throw new NotFoundException('Articles not found');
+
       return {
         data: items.map((article) => ({
           id: article.id,
